@@ -22,6 +22,7 @@ class MyComponent extends React.Component {
       limit: 10,
       page: 1,
       total_page:0,
+      perview_click: false,
       filter_click: false,
       filter_value: STATUS_ALL,
       search: false,
@@ -218,6 +219,17 @@ class MyComponent extends React.Component {
     this.filtering(elm,this.state.search_value)
   }
 
+  perviewclickHandle(elm) {
+    this.setState({limit: elm})
+    this.setState({page: 1})
+    this.setState({perview_click: !this.state.perview_click})
+
+    var that = this
+    setTimeout(function () {
+        that.filtering(that.state.filter_value,that.state.search_value)
+    }, 500);
+  }
+
   searching(item,elm,text) {
       if (elm) {
         if  ( item.status == elm && ( item.name.toLowerCase().includes(text.toLowerCase()) || item.order_id.toLowerCase().includes(text.toLowerCase()) || item.email.toLowerCase().includes(text.toLowerCase())
@@ -243,10 +255,10 @@ class MyComponent extends React.Component {
     } else {
       this.setState({transactions_filtered:this.state.transactions.filter((item) => this.searching(item,false,text) )})
       this.setState({total_page:Math.ceil(this.state.transactions.filter((item) => this.searching(item,false,text) ).length / this.state.limit)})
-      console.log(this.state.transactions.filter((item) => this.searching(item,false,text)).length)
+
       var total_page = Math.ceil(this.state.transactions.filter((item) => this.searching(item,false,text)).length / this.state.limit)
     };
-
+    console.log(total_page)
     if(total_page-1 > 5) {
       this.generatePage(1,5);
     } else {
@@ -256,6 +268,10 @@ class MyComponent extends React.Component {
 
   filter() {
     this.setState({filter_click: !this.state.filter_click})
+  }
+
+  perview() {
+    this.setState({perview_click: !this.state.perview_click})
   }
 
   search() {
@@ -511,7 +527,12 @@ class MyComponent extends React.Component {
                 </div>
                 <div className="col-3-12 right">
                   <div className="per-view">
-                    10 <i className="material-icons">keyboard_arrow_down</i>
+                    {this.state.limit} <i className="material-icons" onClick={this.perview.bind(this)}>keyboard_arrow_down</i>
+                    <div className={(this.state.perview_click) ? "option" : "option hidden"}>
+                      <div className="per-view-item bg-white" onClick={this.perviewclickHandle.bind(this,10)}>10</div>
+                      <div className="per-view-item bg-white" onClick={this.perviewclickHandle.bind(this,50)}>50</div>
+                      <div className="per-view-item bg-white" onClick={this.perviewclickHandle.bind(this,100)}>100</div>
+                    </div>
                   </div>
                 </div>
               </div>
