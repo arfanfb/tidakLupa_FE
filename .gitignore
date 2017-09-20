@@ -1,0 +1,9 @@
+# System
+.DS_Store
+Thumbs.db
+logs
+
+# Babel Cache
+dist/
+babel_cache/
+node_modules/
