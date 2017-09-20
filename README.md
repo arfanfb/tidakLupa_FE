@@ -14,6 +14,7 @@ Technology that used in this application is
 
 ## Setup
 
+* You need to install all of package that used on this project with command `npm install`
 * You need to run app with command `npm start` or `NODE_ENV=production node node_modules/.bin/babel-node --presets 'es2015' src/server.js` on your terminal machine.
 * After your app is ready, you can access it from [http://localhost:8080](http://localhost:8080)..
 * All dummy data stored at `/src/data.json`.
